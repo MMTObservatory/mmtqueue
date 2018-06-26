@@ -1,0 +1,17 @@
+[Unit]
+Description=BinoSpec/MMIRS queue dispatcher 
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+# Redirecting stdout to /dev/null.  stderr goes to the usual journal file.
+StandardOutput=null
+StandardError=journal
+# Change this environment variable as needed to locate the source files.
+Environment=CURRENTWORKINGDIRECTORY=/home/mmtqueue/git/QueueScheduler2.0/
+# Change the python executable as needed.  Must by python 3.5+
+ExecStart=/usr/bin/python3.6 ${CURRENTWORKINGDIRECTORY}mmtscheduler_server.py -m=2 -c=${CURRENTWORKINGDIRECTORY}
+
+[Install]
+WantedBy=multi-user.target
